@@ -34,12 +34,12 @@ static const int16_t VAL_SONG_X   = 42,  W_SONG   = 112;  // ends 154
 static const int16_t VAL_STATUS_X = 54,  W_STATUS = 100;  // ends 154
 
 // Normal page rows - top margin 2px, 20px pitch, clearly separated
-static const int16_t Y_N_TIME = 8, Y_N_BRIGHT = 24, Y_N_EFFECT = 40,
-                      Y_N_SPDINT = 56, Y_N_RAMFS = 72, Y_N_FPS = 88;
+static const int16_t Y_N_TIME = 24, Y_N_BRIGHT = 40, Y_N_EFFECT = 56,
+                      Y_N_SPDINT = 72, Y_N_RAMFS = 88, Y_N_FPS = 104;
 
 // Song page rows
-static const int16_t Y_S_TIME = 8, Y_S_SONG = 24, Y_S_STATUS = 40,
-                      Y_S_RAMFS = 56, Y_S_FPS = 72;
+static const int16_t Y_S_TIME = 24, Y_S_SONG = 40, Y_S_STATUS = 56,
+                      Y_S_RAMFS = 72, Y_S_FPS = 88;
 
 static const uint32_t FAST_INTERVAL_MS   = 100;
 static const uint32_t SECOND_INTERVAL_MS = 1000;
