@@ -1,4 +1,5 @@
 #include "wled.h"
+#include "../usermods/ST7735_display/ST7735_display.h"
 /*
  * This v1 usermod file allows you to add own functionality to WLED more easily
  * See: https://github.com/wled-dev/WLED/wiki/Add-own-functionality
@@ -13,17 +14,17 @@
 //gets called once at boot. Do all initialization that doesn't depend on network here
 void userSetup()
 {
-
+  ST7735Display.begin();
 }
 
 //gets called every time WiFi is (re-)connected. Initialize own network interfaces here
 void userConnected()
 {
-
+  ST7735Display.connected();
 }
 
 //loop. You can use "if (WLED_CONNECTED)" to check for successful connection
 void userLoop()
 {
-
+  ST7735Display.loop();
 }
