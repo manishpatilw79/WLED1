@@ -34,8 +34,8 @@ static const int16_t VAL_SONG_X   = 42,  W_SONG   = 112;  // ends 154
 static const int16_t VAL_STATUS_X = 54,  W_STATUS = 100;  // ends 154
 
 // Normal page rows - top margin 2px, 20px pitch, clearly separated
-static const int16_t Y_N_TIME = 24, Y_N_BRIGHT = 40, Y_N_EFFECT = 56,
-                      Y_N_SPDINT = 72, Y_N_RAMFS = 88, Y_N_FPS = 104;
+static const int16_t Y_N_TIME = 25, Y_N_BRIGHT = 38, Y_N_EFFECT = 52,
+                      Y_N_SPDINT = 66, Y_N_RAMFS = 80, Y_N_FPS = 94;
 
 // Song page rows
 static const int16_t Y_S_TIME = 24, Y_S_SONG = 40, Y_S_STATUS = 56,
@@ -56,7 +56,7 @@ static const uint16_t COLOR_BRIGHT    = TFT_ORANGE;
 static const uint16_t COLOR_EFFECT    = TFT_MAGENTA;
 static const uint16_t COLOR_SPEED     = TFT_WHITE;
 static const uint16_t COLOR_INTENSITY = TFT_CYAN;
-static const uint16_t COLOR_RAM       = TFT_GREENYELLOW;
+static const uint16_t COLOR_RAM       = TFT_PINK;
 static const uint16_t COLOR_FS        = TFT_BLUE;
 static const uint16_t COLOR_FPS       = TFT_RED;
 
