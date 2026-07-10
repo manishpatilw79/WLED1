@@ -34,12 +34,12 @@ static const int16_t VAL_SONG_X   = 42,  W_SONG   = 112;  // ends 154
 static const int16_t VAL_STATUS_X = 54,  W_STATUS = 100;  // ends 154
 
 // Normal page rows - top margin 2px, 20px pitch, clearly separated
-static const int16_t Y_N_TIME = 25, Y_N_BRIGHT = 38, Y_N_EFFECT = 52,
-                      Y_N_SPDINT = 66, Y_N_RAMFS = 80, Y_N_FPS = 94;
+static const int16_t Y_N_TIME = 26, Y_N_BRIGHT = 39, Y_N_EFFECT = 53,
+                      Y_N_SPDINT = 67, Y_N_RAMFS = 81, Y_N_FPS = 95;
 
 // Song page rows
-static const int16_t Y_S_TIME = 24, Y_S_SONG = 40, Y_S_STATUS = 56,
-                      Y_S_RAMFS = 72, Y_S_FPS = 88;
+static const int16_t Y_S_TIME = 26, Y_S_SONG = 42, Y_S_STATUS = 59,
+                      Y_S_RAMFS = 77, Y_S_FPS = 95;
 
 static const uint32_t FAST_INTERVAL_MS   = 100;
 static const uint32_t SECOND_INTERVAL_MS = 1000;
@@ -97,10 +97,30 @@ void ST7735DisplayClass::begin() {
   // Backlight is assumed wired directly to VCC (no BL pin was specified) -
   // it is on as soon as the module has power, nothing to drive here.
 
+  // <<<<< इथे animation टाक >>>>>
+
+  for (int repeat = 0; repeat < 3; repeat++) {
+    for (int dots = 1; dots <= 7; dots++) {
+
+      char txt[32] = "Initializing";
+      for (int i = 0; i < dots; i++) strcat(txt, ".");
+
+      _tft.fillScreen(TFT_BLACK);
+      _tft.setCursor(15, 60);
+      _tft.print(txt);
+
+      delay(150);
+    }
+  }
+
+  _tft.fillScreen(TFT_BLACK);
+
   _activePage   = 0xFF;
   _forceRefresh = true;
   switchPage(PAGE_NORMAL);
-}
+}  
+
+// Animation page end. 
 
 void ST7735DisplayClass::connected() {
   // Nothing shown on-screen depends on WiFi state; just make sure every
