@@ -28,7 +28,7 @@ static const int16_t VAL_EFFECT_X = 54,  W_EFFECT = 102;  // ends 156
 static const int16_t VAL_SPD_X    = 36,  W_SPD    = 34;   // ends 70
 static const int16_t VAL_INT_X    = 110, W_INT    = 40;   // ends 150
 static const int16_t VAL_RAM_X    = 36,  W_RAM    = 34;   // ends 70
-static const int16_t VAL_FS_X     = 104, W_FS     = 95;   // ends 156
+static const int16_t VAL_FS_X     = 104, W_FS     = 110;   // ends 156
 static const int16_t VAL_FPS_X    = 36,  W_FPS    = 40;   // ends 76
 static const int16_t VAL_SONG_X   = 42,  W_SONG   = 112;  // ends 154
 static const int16_t VAL_STATUS_X = 54,  W_STATUS = 100;  // ends 154
@@ -99,20 +99,23 @@ void ST7735DisplayClass::begin() {
 
   // <<<<< इथे animation टाक >>>>>
 
-  for (int repeat = 0; repeat < 3; repeat++) {
+  _tft.fillScreen(TFT_BLACK);
+_tft.setTextColor(TFT_WHITE, TFT_BLACK);
+
+for (int repeat = 0; repeat < 3; repeat++) {
     for (int dots = 1; dots <= 7; dots++) {
 
-      char txt[32] = "Initializing";
-      for (int i = 0; i < dots; i++) strcat(txt, ".");
+        char txt[32] = "Initializing";
+        for (int i = 0; i < dots; i++) strcat(txt, ".");
 
-      _tft.fillScreen(TFT_BLACK);
-      _tft.setCursor(15, 60);
-      _tft.print(txt);
+        _tft.setCursor(15, 60);
+        _tft.print("                     "); // जुना text erase
+        _tft.setCursor(15, 60);
+        _tft.print(txt);
 
-      delay(150);
+        delay(150);
     }
-  }
-
+}
   _tft.fillScreen(TFT_BLACK);
 
   _activePage   = 0xFF;
