@@ -28,7 +28,7 @@ static const int16_t VAL_EFFECT_X = 54,  W_EFFECT = 102;  // ends 156
 static const int16_t VAL_SPD_X    = 36,  W_SPD    = 34;   // ends 70
 static const int16_t VAL_INT_X    = 110, W_INT    = 40;   // ends 150
 static const int16_t VAL_RAM_X    = 36,  W_RAM    = 34;   // ends 70
-static const int16_t VAL_FS_X     = 104, W_FS     = 76;   // ends 156
+static const int16_t VAL_FS_X     = 104, W_FS     = 85;   // ends 156
 static const int16_t VAL_FPS_X    = 36,  W_FPS    = 40;   // ends 76
 static const int16_t VAL_SONG_X   = 42,  W_SONG   = 112;  // ends 154
 static const int16_t VAL_STATUS_X = 54,  W_STATUS = 100;  // ends 154
@@ -270,17 +270,14 @@ if (force || (uint16_t)(heapKB * 10) != _lastHeapKB) {
 
     if (force || usedBytes != _lastFsUsedKB || totalBytes != _lastFsTotalKB) {
 
-        float usedMB  = (float)usedBytes  / (1024.0f * 1024.0f);
-        float totalMB = (float)totalBytes / (1024.0f * 1024.0f);
+        float freeMB = (float)(totalBytes - usedBytes) / (1024.0f * 1024.0f);
 
         _tft.fillRect(VAL_FS_X, Y_N_RAMFS, W_FS, 10, TFT_BLACK);
-        _tft.setCursor(VAL_FS_X, Y_N_RAMFS);
-        _tft.setTextColor(COLOR_FS, TFT_BLACK);
+_tft.setCursor(VAL_FS_X, Y_N_RAMFS);
+_tft.setTextColor(COLOR_FS, TFT_BLACK);
 
-        _tft.print(usedMB, 2);
-        _tft.print("/");
-        _tft.print(totalMB, 2);
-        _tft.print(" MB");
+_tft.print(freeMB, 2);
+_tft.print(" MB");
 
         _lastFsUsedKB  = usedBytes;
         _lastFsTotalKB = totalBytes;
