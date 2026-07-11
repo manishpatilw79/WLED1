@@ -365,17 +365,14 @@ if (force || (uint16_t)(heapKB * 10) != _lastHeapKB) {
 
     if (force || usedBytes != _lastFsUsedKB || totalBytes != _lastFsTotalKB) {
 
-        float usedMB  = (float)usedBytes  / (1024.0f * 1024.0f);
-        float totalMB = (float)totalBytes / (1024.0f * 1024.0f);
+        float freeMB = (float)(totalBytes - usedBytes) / (1024.0f * 1024.0f);
 
         _tft.fillRect(VAL_FS_X, Y_N_RAMFS, W_FS, 10, TFT_BLACK);
-        _tft.setCursor(VAL_FS_X, Y_N_RAMFS);
-        _tft.setTextColor(COLOR_FS, TFT_BLACK);
+_tft.setCursor(VAL_FS_X, Y_N_RAMFS);
+_tft.setTextColor(COLOR_FS, TFT_BLACK);
 
-        _tft.print(usedMB, 2);
-        _tft.print("/");
-        _tft.print(totalMB, 2);
-        _tft.print(" MB");
+_tft.print(freeMB, 2);
+_tft.print(" MB");
 
         _lastFsUsedKB  = usedBytes;
         _lastFsTotalKB = totalBytes;
