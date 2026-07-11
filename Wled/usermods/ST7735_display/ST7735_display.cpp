@@ -22,7 +22,7 @@ ST7735DisplayClass ST7735Display;
 static const int16_t LABEL_X      = 2;
 static const int16_t COL2_LABEL_X = 86;  // 2nd label on a shared row (Int:, FS:)
 
-static const int16_t VAL_TIME_X   = 42,  W_TIME   = 60;   // ends 102
+static const int16_t VAL_TIME_X   = 42,  W_TIME   = 95;   // ends 102
 static const int16_t VAL_BRIGHT_X = 54,  W_BRIGHT = 40;   // ends 94
 static const int16_t VAL_EFFECT_X = 54,  W_EFFECT = 102;  // ends 156
 static const int16_t VAL_SPD_X    = 36,  W_SPD    = 34;   // ends 70
@@ -227,14 +227,29 @@ void ST7735DisplayClass::printField(int16_t x, int16_t y, int16_t w, const char*
 // Normal page
 // ---------------------------------------------------------------------
 void ST7735DisplayClass::updateNormalPage(bool doSecond, bool doFs, bool force) {
+
+  // Time section
+  
   if (doSecond || force) {
     int h = hour(localTime), m = minute(localTime), s = second(localTime);
+
     if (force || h != _lastHour || m != _lastMinute || s != _lastSecond) {
-      char buf[9];
-      snprintf(buf, sizeof(buf), "%02d:%02d:%02d", h, m, s);
-      printField(VAL_TIME_X, Y_N_TIME, W_TIME, buf, COLOR_TIME);
-      _lastHour = h; _lastMinute = m; _lastSecond = s;
+
+        int h12 = h % 12;
+        if (h12 == 0) h12 = 12;
+
+        const char* ampm = (h < 12) ? "AM" : "PM";
+
+        char buf[16];
+        snprintf(buf, sizeof(buf), "%02d:%02d:%02d %s", h12, m, s, ampm);
+
+        printField(VAL_TIME_X, Y_N_TIME, W_TIME, buf, COLOR_TIME);
+
+        _lastHour   = h;
+        _lastMinute = m;
+        _lastSecond = s;
     }
+}
 
 
 //RAM Section  code
@@ -342,14 +357,29 @@ _tft.print("MB");
 // Song page
 // ---------------------------------------------------------------------
 void ST7735DisplayClass::updateSongPage(bool doSecond, bool doFs, bool force) {
+  
+  // Time Section
+  
   if (doSecond || force) {
     int h = hour(localTime), m = minute(localTime), s = second(localTime);
+
     if (force || h != _lastHour || m != _lastMinute || s != _lastSecond) {
-      char buf[9];
-      snprintf(buf, sizeof(buf), "%02d:%02d:%02d", h, m, s);
-      printField(VAL_TIME_X, Y_S_TIME, W_TIME, buf, COLOR_TIME);
-      _lastHour = h; _lastMinute = m; _lastSecond = s;
+
+        int h12 = h % 12;
+        if (h12 == 0) h12 = 12;
+
+        const char* ampm = (h < 12) ? "AM" : "PM";
+
+        char buf[16];
+        snprintf(buf, sizeof(buf), "%02d:%02d:%02d %s", h12, m, s, ampm);
+
+        printField(VAL_TIME_X, Y_N_TIME, W_TIME, buf, COLOR_TIME);
+
+        _lastHour   = h;
+        _lastMinute = m;
+        _lastSecond = s;
     }
+}
 
 // RAM SECTION
 
@@ -401,6 +431,8 @@ _tft.print("MB");
     }
 }
 
+// Song Name 
+
   char file[24];
   snprintf(file, sizeof(file), "%s", song.currentFile().c_str());
   truncateToWidth(file, W_SONG);
@@ -409,6 +441,8 @@ _tft.print("MB");
     strncpy(_lastSongFile, file, sizeof(_lastSongFile) - 1);
     _lastSongFile[sizeof(_lastSongFile) - 1] = '\0';
   }
+
+// Song States
 
   char status[10];
   snprintf(status, sizeof(status), "%s", song.stateString().c_str());
