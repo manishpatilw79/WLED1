@@ -20,7 +20,7 @@ ST7735DisplayClass ST7735Display;
 // hold the largest value that field can ever show.
 // ---------------------------------------------------------------------
 static const int16_t LABEL_X      = 2;
-static const int16_t COL2_LABEL_X = 76;  // 2nd label on a shared row (Int:, FS:)
+static const int16_t COL2_LABEL_X = 86;  // 2nd label on a shared row (Int:, FS:)
 
 static const int16_t VAL_TIME_X   = 42,  W_TIME   = 60;   // ends 102
 static const int16_t VAL_BRIGHT_X = 54,  W_BRIGHT = 40;   // ends 94
@@ -28,7 +28,7 @@ static const int16_t VAL_EFFECT_X = 54,  W_EFFECT = 102;  // ends 156
 static const int16_t VAL_SPD_X    = 36,  W_SPD    = 34;   // ends 70
 static const int16_t VAL_INT_X    = 110, W_INT    = 40;   // ends 150
 static const int16_t VAL_RAM_X    = 36,  W_RAM    = 34;   // ends 70
-static const int16_t VAL_FS_X     = 104, W_FS     = 110;   // ends 156
+static const int16_t VAL_FS_X     = 114, W_FS     = 72;   // ends 156
 static const int16_t VAL_FPS_X    = 36,  W_FPS    = 40;   // ends 76
 static const int16_t VAL_SONG_X   = 42,  W_SONG   = 112;  // ends 154
 static const int16_t VAL_STATUS_X = 54,  W_STATUS = 100;  // ends 154
