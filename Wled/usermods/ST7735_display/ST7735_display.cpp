@@ -38,8 +38,8 @@ static const int16_t Y_N_TIME = 26, Y_N_BRIGHT = 39, Y_N_EFFECT = 53,
                       Y_N_SPDINT = 67, Y_N_RAMFS = 81, Y_N_FPS = 95;
 
 // Song page rows
-static const int16_t Y_S_TIME = 26, Y_S_SONG = 42, Y_S_STATUS = 59,
-                      Y_S_RAMFS = 77, Y_S_FPS = 95;
+static const int16_t Y_S_TIME = 26, Y_S_SONG = 44, Y_S_STATUS = 62,
+                      Y_S_RAMFS = 81, Y_S_FPS = 95;
 
 static const uint32_t FAST_INTERVAL_MS   = 100;
 static const uint32_t SECOND_INTERVAL_MS = 1000;
