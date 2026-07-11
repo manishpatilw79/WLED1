@@ -265,22 +265,21 @@ if (force || (uint16_t)(heapKB * 10) != _lastHeapKB) {
 
   if (doFs || force) {
 
-    size_t usedKB  = songStorage.usedBytes() / 1024;
-    size_t totalKB = songStorage.totalBytes() / 1024;
+    size_t usedBytes  = songStorage.usedBytes();
+    size_t totalBytes = songStorage.totalBytes();
 
-    if (force || usedKB != _lastFsUsedKB || totalKB != _lastFsTotalKB) {
+    if (force || usedBytes != _lastFsUsedKB || totalBytes != _lastFsTotalKB) {
 
-        float usedMB  = (float)songStorage.usedBytes()  / (1024.0f * 1024.0f);
-        float totalMB = (float)songStorage.totalBytes() / (1024.0f * 1024.0f);
+        _tft.fillRect(VAL_FS_X, Y_N_RAMFS, W_FS, 10, TFT_BLACK);
+        _tft.setCursor(VAL_FS_X, Y_N_RAMFS);
+        _tft.setTextColor(COLOR_FS, TFT_BLACK);
 
-        char buf[24];
-        snprintf(buf, sizeof(buf), "%.2f/%.2f MB", usedMB, totalMB);
+        _tft.print(usedBytes);
+        _tft.print("/");
+        _tft.print(totalBytes);
 
-        truncateToWidth(buf, W_FS);
-        printField(VAL_FS_X, Y_N_RAMFS, W_FS, buf, COLOR_FS);
-
-        _lastFsUsedKB  = usedKB;
-        _lastFsTotalKB = totalKB;
+        _lastFsUsedKB  = usedBytes;
+        _lastFsTotalKB = totalBytes;
     }
 }
   // Cheap int comparisons - fine to check every fast tick for near-instant feel
