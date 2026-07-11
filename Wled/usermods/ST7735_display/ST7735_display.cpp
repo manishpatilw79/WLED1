@@ -264,16 +264,17 @@ if (force || (uint16_t)(heapKB * 10) != _lastHeapKB) {
 // FS Section
 
   if (doFs || force) {
-    size_t usedKB  = fsBytesUsed  / 1024;
-    size_t totalKB = fsBytesTotal / 1024;
+
+    size_t usedKB  = songStorage.usedBytes() / 1024;
+    size_t totalKB = songStorage.totalBytes() / 1024;
 
     if (force || usedKB != _lastFsUsedKB || totalKB != _lastFsTotalKB) {
 
-        float usedMB  = (float)fsBytesUsed  / (1024.0f * 1024.0f);
-        float totalMB = (float)fsBytesTotal / (1024.0f * 1024.0f);
+        float usedMB  = (float)songStorage.usedBytes()  / (1024.0f * 1024.0f);
+        float totalMB = (float)songStorage.totalBytes() / (1024.0f * 1024.0f);
 
-        char buf[20];
-        snprintf(buf, sizeof(buf), "%.2f/%.2fM", usedMB, totalMB);
+        char buf[24];
+        snprintf(buf, sizeof(buf), "%.2f/%.2f MB", usedMB, totalMB);
 
         truncateToWidth(buf, W_FS);
         printField(VAL_FS_X, Y_N_RAMFS, W_FS, buf, COLOR_FS);
