@@ -233,13 +233,24 @@ void ST7735DisplayClass::updateNormalPage(bool doSecond, bool doFs, bool force) 
       _lastHour = h; _lastMinute = m; _lastSecond = s;
     }
 
-    uint32_t heapKB = ESP.getFreeHeap() / 1024;
-    if (force || heapKB != _lastHeapKB) {
-      char buf[8];
-      snprintf(buf, sizeof(buf), "%luKB", (unsigned long)heapKB);
-      printField(VAL_RAM_X, Y_N_RAMFS, W_RAM, buf, COLOR_RAM);
-      _lastHeapKB = heapKB;
-    }
+
+//RAM Section  code
+
+    float heapKB = (float)ESP.getFreeHeap() / 1024.0f;
+
+if (force || (uint16_t)(heapKB * 10) != _lastHeapKB) {
+
+    char buf[16];
+    dtostrf(heapKB, 0, 1, buf);   // 1 decimal
+
+    strcat(buf, " KB");
+
+    printField(VAL_RAM_X, Y_N_RAMFS, W_RAM, buf, COLOR_RAM);
+
+    _lastHeapKB = (uint16_t)(heapKB * 10);
+}
+
+// FPS SECTION
 
     uint16_t fps = strip.getFps();
     if (force || fps != _lastFps) {
@@ -249,6 +260,8 @@ void ST7735DisplayClass::updateNormalPage(bool doSecond, bool doFs, bool force) 
       _lastFps = fps;
     }
   }
+
+// FS Section
 
   if (doFs || force) {
     size_t usedKB  = fsBytesUsed  / 1024;
