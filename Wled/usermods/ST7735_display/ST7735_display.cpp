@@ -287,6 +287,9 @@ _tft.print("MB");
     }
 }
   // Cheap int comparisons - fine to check every fast tick for near-instant feel
+
+// Brightness Section
+
   if (force || bri != _lastBri) {
     char buf[5];
     snprintf(buf, sizeof(buf), "%u", bri);
@@ -294,15 +297,28 @@ _tft.print("MB");
     _lastBri = bri;
   }
 
+
+//Effect section
+
   if (force || effectCurrent != _lastEffect) {
-    // Real WLED effect name, read directly from the FX.h-generated mode
-    // table via WS2812FX - never a separate/hardcoded name list.
-    char name[32];
-    extractModeName(effectCurrent, strip.getModeData(effectCurrent), name, sizeof(name));
+
+    char name[64];
+    snprintf(name, sizeof(name), "%s", strip.getModeData(effectCurrent));
+
+    char *p = strchr(name, '@');
+    if (p) *p = '\0';
+
+    p = strchr(name, ';');
+    if (p) *p = '\0';
+
     truncateToWidth(name, W_EFFECT);
     printField(VAL_EFFECT_X, Y_N_EFFECT, W_EFFECT, name, COLOR_EFFECT);
+
     _lastEffect = effectCurrent;
-  }
+}
+
+
+//Speed section
 
   if (force || effectSpeed != _lastSpeed) {
     char buf[5];
@@ -310,6 +326,9 @@ _tft.print("MB");
     printField(VAL_SPD_X, Y_N_SPDINT, W_SPD, buf, COLOR_SPEED);
     _lastSpeed = effectSpeed;
   }
+
+
+// Effectintensity  section
 
   if (force || effectIntensity != _lastIntensity) {
     char buf[5];
