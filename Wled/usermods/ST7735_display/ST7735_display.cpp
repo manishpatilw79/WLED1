@@ -98,37 +98,6 @@ void ST7735DisplayClass::begin() {
   // it is on as soon as the module has power, nothing to drive here.
 
 
-// Logo Section
-
-
-void ST7735DisplayClass::showBootLogo() {
-
-    if (!songStorage.exists("logo.bin"))
-        return;
-
-    File f = songStorage.openRead("logo.bin");
-
-    if (!f)
-        return;
-
-    const uint16_t LOGO_W = 160;
-    const uint16_t LOGO_H = 128;
-
-    uint16_t line[LOGO_W];
-
-    _tft.fillScreen(TFT_BLACK);
-
-    for (uint16_t y = 0; y < LOGO_H; y++) {
-
-        if (f.read((uint8_t*)line, LOGO_W * 2) != LOGO_W * 2)
-            break;
-
-        _tft.pushImage(0, y, LOGO_W, 1, line);
-    }
-
-    f.close();
-}
-
 
 
   // <<<<< इथे animation टाक >>>>>
@@ -162,6 +131,37 @@ for (int repeat = 0; repeat < 3; repeat++) {
 }  
 
 // Animation page end. 
+
+
+// Logo section
+
+void ST7735DisplayClass::showBootLogo() {
+
+    if (!songStorage.exists("logo.bin"))
+        return;
+
+    File f = songStorage.openRead("logo.bin");
+    if (!f)
+        return;
+
+    const uint16_t LOGO_W = 160;
+    const uint16_t LOGO_H = 128;
+
+    uint16_t line[LOGO_W];
+
+    _tft.fillScreen(TFT_BLACK);
+
+    for (uint16_t y = 0; y < LOGO_H; y++) {
+
+        if (f.read((uint8_t*)line, LOGO_W * 2) != LOGO_W * 2)
+            break;
+
+        _tft.pushImage(0, y, LOGO_W, 1, line);
+    }
+
+    f.close();
+}
+
 
 void ST7735DisplayClass::connected() {
   // Nothing shown on-screen depends on WiFi state; just make sure every
