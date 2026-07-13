@@ -97,7 +97,45 @@ void ST7735DisplayClass::begin() {
   // Backlight is assumed wired directly to VCC (no BL pin was specified) -
   // it is on as soon as the module has power, nothing to drive here.
 
+
+// Logo Section
+
+
+void ST7735DisplayClass::showBootLogo() {
+
+    if (!songStorage.exists("logo.bin"))
+        return;
+
+    File f = songStorage.openRead("logo.bin");
+
+    if (!f)
+        return;
+
+    const uint16_t LOGO_W = 160;
+    const uint16_t LOGO_H = 128;
+
+    uint16_t line[LOGO_W];
+
+    _tft.fillScreen(TFT_BLACK);
+
+    for (uint16_t y = 0; y < LOGO_H; y++) {
+
+        if (f.read((uint8_t*)line, LOGO_W * 2) != LOGO_W * 2)
+            break;
+
+        _tft.pushImage(0, y, LOGO_W, 1, line);
+    }
+
+    f.close();
+}
+
+
+
   // <<<<< इथे animation टाक >>>>>
+
+showBootLogo();
+delay(3000);
+
 
   _tft.fillScreen(TFT_BLACK);
 _tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -227,14 +265,26 @@ void ST7735DisplayClass::printField(int16_t x, int16_t y, int16_t w, const char*
 // Normal page
 // ---------------------------------------------------------------------
 void ST7735DisplayClass::updateNormalPage(bool doSecond, bool doFs, bool force) {
-  if (doSecond || force) {
+  
+if (doSecond || force) {
     int h = hour(localTime), m = minute(localTime), s = second(localTime);
+
     if (force || h != _lastHour || m != _lastMinute || s != _lastSecond) {
-      char buf[9];
-      snprintf(buf, sizeof(buf), "%02d:%02d:%02d", h, m, s);
-      printField(VAL_TIME_X, Y_N_TIME, W_TIME, buf, COLOR_TIME);
-      _lastHour = h; _lastMinute = m; _lastSecond = s;
+
+        int h12 = h % 12;
+        if (h12 == 0) h12 = 12;
+
+        char buf[9];
+        snprintf(buf, sizeof(buf), "%02d:%02d:%02d",
+                 h12, m, s);
+
+        printField(VAL_TIME_X, Y_N_TIME, W_TIME, buf, COLOR_TIME);
+
+        _lastHour   = h;
+        _lastMinute = m;
+        _lastSecond = s;
     }
+}
 
 
 //RAM Section  code
@@ -342,15 +392,26 @@ _tft.print("MB");
 // Song page
 // ---------------------------------------------------------------------
 void ST7735DisplayClass::updateSongPage(bool doSecond, bool doFs, bool force) {
-  if (doSecond || force) {
+  
+if (doSecond || force) {
     int h = hour(localTime), m = minute(localTime), s = second(localTime);
-    if (force || h != _lastHour || m != _lastMinute || s != _lastSecond) {
-      char buf[9];
-      snprintf(buf, sizeof(buf), "%02d:%02d:%02d", h, m, s);
-      printField(VAL_TIME_X, Y_S_TIME, W_TIME, buf, COLOR_TIME);
-      _lastHour = h; _lastMinute = m; _lastSecond = s;
-    }
 
+    if (force || h != _lastHour || m != _lastMinute || s != _lastSecond) {
+
+        int h12 = h % 12;
+        if (h12 == 0) h12 = 12;
+
+        char buf[9];
+        snprintf(buf, sizeof(buf), "%02d:%02d:%02d",
+                 h12, m, s);
+
+        printField(VAL_TIME_X, Y_N_TIME, W_TIME, buf, COLOR_TIME);
+
+        _lastHour   = h;
+        _lastMinute = m;
+        _lastSecond = s;
+    }
+}
 // RAM SECTION
 
     float heapKB = (float)ESP.getFreeHeap() / 1024.0f;
