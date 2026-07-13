@@ -27,6 +27,8 @@ class ST7735DisplayClass {
   private:
     TFT_eSPI _tft = TFT_eSPI();
 
+
+
     enum : uint8_t { PAGE_NORMAL = 0, PAGE_SONG = 1 };
     uint8_t _activePage   = 0xFF;
     bool    _forceRefresh = true;
@@ -46,6 +48,8 @@ class ST7735DisplayClass {
     char     _lastSongStatus[10] = {0};
     bool     _lastSongActive = false;
 
+
+    void showBootLogo();
     void switchPage(uint8_t page);
     void drawNormalLabels();
     void drawSongLabels();
