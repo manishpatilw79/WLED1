@@ -266,6 +266,10 @@ void ST7735DisplayClass::printField(int16_t x, int16_t y, int16_t w, const char*
 // ---------------------------------------------------------------------
 void ST7735DisplayClass::updateNormalPage(bool doSecond, bool doFs, bool force) {
   
+
+
+
+
 if (doSecond || force) {
     int h = hour(localTime), m = minute(localTime), s = second(localTime);
 
@@ -284,8 +288,9 @@ if (doSecond || force) {
         _lastMinute = m;
         _lastSecond = s;
     }
-}
 
+
+  
 
 //RAM Section  code
 
@@ -411,7 +416,8 @@ if (doSecond || force) {
         _lastMinute = m;
         _lastSecond = s;
     }
-}
+
+  
 // RAM SECTION
 
     float heapKB = (float)ESP.getFreeHeap() / 1024.0f;
