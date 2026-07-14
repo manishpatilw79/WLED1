@@ -94,6 +94,9 @@ void ST7735DisplayClass::begin() {
   _tft.setTextSize(1);
   _tft.setTextWrap(false);      // never wrap - every line stays on one row
   _tft.setTextColor(TFT_WHITE, TFT_BLACK);
+
+  delay(50);
+showBootLogo();
   // Backlight is assumed wired directly to VCC (no BL pin was specified) -
   // it is on as soon as the module has power, nothing to drive here.
 
